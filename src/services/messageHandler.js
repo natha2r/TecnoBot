@@ -9,13 +9,18 @@ class MessageHandler {
     if (message?.type === "text") {
       const incomingMessage = message.text.body.toLowerCase().trim();
       const user = message.from;
-
+  
       if (this.isGreeting(incomingMessage)) {
         await this.sendWelcomeMessage(user, senderInfo);
         await this.sendMainMenu(user);
       } else {
         await this.handleMenuOption(user, incomingMessage);
       }
+      await whatsappService.markAsRead(message.id);
+    } else if (message?.type === "interactive") { // Nueva comprobación
+      const user = message.from;
+      const buttonId = message.interactive.button_reply.id;
+      await this.handleButtonReply(user, buttonId);
       await whatsappService.markAsRead(message.id);
     }
   }
@@ -31,40 +36,66 @@ class MessageHandler {
 
   async sendWelcomeMessage(to, senderInfo) {
     const name = this.getSenderName(senderInfo);
-    const welcomeMessage = `👋 ¡Hola ${name}! Bienvenido a Tecnoparque Nodo Bucaramanga 🚀\n\n¿En qué puedo ayudarte?`;
+    const welcomeMessage = ` 👋 ¡Hola ${name}! Soy el asistente virtual del Tecnoparque Nodo Bucaramanga Bienvenido. 🚀\n\n¿En qué puedo ayudarte?`;
     await whatsappService.sendMessage(to, welcomeMessage);
   }
 
   async sendMainMenu(to) {
-    const menuMessage = `Para seleccionar una opción, simplemente escribe el número correspondiente:\n\n1️⃣ Información sobre Tecnoparque 📌\n2️⃣ Registro y seguimiento de proyectos 📑\n3️⃣ Asesorías y citas con expertos 👨‍🏫\n4️⃣ Eventos y convocatorias 📅\n5️⃣ Recursos y documentación 📚\n6️⃣ Contactar a un mentor 🆘`;
+    const menuMessage = `Para seleccionar una opción, simplemente escribe el número correspondiente:\n\n1️⃣ Información sobre Tecnoparque \n2️⃣ Registro y seguimiento de proyectos \n3️⃣ Asesorías y citas con expertos ‍\n4️⃣ Eventos y convocatorias \n5️⃣ Recursos y documentación \n6️⃣ Contactar a un mentor 🆘`;
     await whatsappService.sendMessage(to, menuMessage);
   }
 
+  async handleButtonReply(to, buttonId) {
+    switch (buttonId) {
+      case "option_1":
+        await whatsappService.sendMessage(to, "Tecnoparque Nodo Bucaramanga está ubicado en [Dirección]. Horario: Lunes a Viernes de 8 AM a 5 PM.");
+        return;
+  
+      case "option_2":
+        await whatsappService.sendMessage(to, "Tecnoparque ofrece especialización en: Software, Mecatrónica, Biotecnología, Automatización, y más.");
+        return;
+  
+      case "option_3":
+        await whatsappService.sendMessage(to, "✅ Para acceder a los servicios de Tecnoparque necesitas presentar un proyecto o idea innovadora.");
+        return;
+
+        case "option_4":
+          await whatsappService.sendMessage(to, "Para registrar un nuevo proyecto en Tecnoparque Nodo Bucaramanga, sigue estos pasos:\n\n1️⃣ Regístrate en la plataforma de Tecnoparque: (https://redtecnoparque.com/).\n2️⃣ Inicia sesión y crea una nueva idea de proyecto.\n3️⃣ Elige el nodo 'Bucaramanga' y describe tu idea.\n\n Tutorial: https://www.youtube.com/watch?v=jY7SiSPnlKc.");
+        return;
+  
+      case "option_5":
+        await whatsappService.sendMessage(to, "Para consultar el estado de tu proyecto en Tecnoparque Nodo Bucaramanga:\n\n🔍 Ingresa a la plataforma de Tecnoparque: [redtecnoparque.com](https://redtecnoparque.com/).\n🔑 Inicia sesión con tu usuario registrado.\n📋 Dirígete a la sección 'Mis Proyectos' para ver el estado actual.\n\n📌 Si tienes dudas, comunícate con el equipo de Tecnoparque Bucaramanga.");
+        return;
+  
+      // ... (Agrega más casos para otros botones)
+  
+      default:
+        await whatsappService.sendMessage(to, "Lo siento, no entendí tu selección. Por favor, elige una opción válida.");
+    }
+  }
+
   async handleMenuOption(to, option) {
-    let response;
     switch (option) {
       case "1":
-        response = `💬 Selecciona la información que necesitas:\n\n1️⃣ Ubicación y horarios de atención 🏢\n2️⃣ Áreas de especialización 🔍\n3️⃣ Requisitos para acceder a los servicios 🛠`;
-        break;
-      case "2":
-        response = `💬 ¿Qué deseas hacer?\n\n1️⃣ Registrar un nuevo proyecto 📝\n2️⃣ Consultar el estado de mi proyecto 🔄`;
-        break;
-      case "3":
-        response = `💬 ¿En qué área necesitas asesoría?\n\n1️⃣ Inteligencia Artificial y Software 🤖\n2️⃣ Automatización y Mecatrónica ⚙️\n3️⃣ Diseño e Impresión 3D 🏗\n4️⃣ Biotecnología y Materiales 🔬`;
-        break;
-      case "4":
-        response = `💬 ¿Qué tipo de eventos te interesan?\n\n1️⃣ Cursos y talleres 🎓\n2️⃣ Hackathones y retos de innovación 💡\n3️⃣ Convocatorias para proyectos 📢`;
-        break;
-      case "5":
-        response = `💬 ¿Qué tipo de material necesitas?\n\n1️⃣ Guías y manuales técnicos 📖\n2️⃣ Formatos para proyectos 📝\n3️⃣ Casos de éxito y ejemplos 📂`;
-        break;
-      case "6":
-        response = `💬 ¿Prefieres hablar con un mentor por...?\n\n1️⃣ Chat en vivo (si hay disponibilidad) 💬\n2️⃣ Correo electrónico 📧\n3️⃣ Llamada telefónica 📞`;
-        break;
+        await whatsappService.sendInteractiveButtons(to, "Selecciona la información que necesitas:", [
+          { type: "reply", reply: { id: "option_1", title: "Ubicación" } },
+          { type: "reply", reply: { id: "option_2", title: "Áreas" } },
+          { type: "reply", reply: { id: "option_3", title: "Requisitos" } }
+        ]);
+        return;
+
+        case "2":
+        await whatsappService.sendInteractiveButtons(to, "Selecciona la información que necesitas:", [
+          { type: "reply", reply: { id: "option_4", title: "Registrar Proyecto" } },
+          { type: "reply", reply: { id: "option_5", title: "Consultar Proyecto" } }
+        ]);
+        return;
+  
+      // ... (Agrega más casos para otros números del menú principal)
+  
       default:
-        response = "Lo siento, no entendí tu selección. Por favor, elige una opción válida escribiendo el número correspondiente.";
+        await whatsappService.sendMessage(to, "Lo siento, no entendí tu selección. Por favor, elige una opción válida.");
     }
-    await whatsappService.sendMessage(to, response);
   }
 }
 
