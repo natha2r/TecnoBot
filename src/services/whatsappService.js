@@ -29,6 +29,30 @@ class WhatsAppService {
     await sendToWhatsApp(data);
   }
 
+  // manejar error en botones
+  // async sendInteractiveButtons(to, bodyText, buttons) {
+  //   console.log("Botones recibidos en whatsappService:", buttons); // Verifica aquí
+  //   const data = {
+  //     messaging_product: 'whatsapp',
+  //     to,
+  //     type: 'interactive',
+  //     interactive: {
+  //       type: 'button',
+  //       body: { text: bodyText },
+  //       action: {
+  //         buttons: buttons,
+  //       },
+  //     },
+  //   };
+  
+  //   try {
+  //     await sendToWhatsApp(data);
+  //   } catch (error) {
+  //     console.error("Error en sendInteractiveButtons:", error);
+  //     throw error;
+  //   }
+  // }
+
   async sendMediaMessage(to, type, mediaUrl, caption) {
     const mediaObject = {};
 
