@@ -16,37 +16,108 @@ class MessageHandler {
   }
 
   async handleIncomingMessage(message, senderInfo) {
+    console.log("Mensaje recibido:", message);
+    console.log("Estado del usuario:", this.userState);
     if (message?.type === "text") {
       const incomingMessage = message.text.body.toLowerCase().trim();
       const user = message.from;
       const to = message.from;
 
+      console.log("Verificando estado de lineas_tecnologicas");
       if (this.userState[user]?.action === "lineas_tecnologicas") {
+        console.log("Usuario en estado de lineas_tecnologicas");
         const seleccion = message.text.body.trim();
         switch (seleccion) {
           case "1":
             await whatsappService.sendMessage(to, messages.ING_DISENO_MESSAGE);
+            await whatsappService.sendInteractiveButtons(
+              to,
+              "¿Necesitas ayuda adicional?",
+              [
+                { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+                {
+                  type: "reply",
+                  reply: { id: "lineas", title: "Ver otra línea" },
+                },
+                {
+                  type: "reply",
+                  reply: { id: "menu", title: "Menú principal" },
+                },
+              ]
+            );
             break;
           case "2":
-            await whatsappService.sendMessage(to, messages.BIOTECNOLOGIA_MESSAGE);
+            await whatsappService.sendMessage(to,messages.BIOTECNOLOGIA_MESSAGE);
+            await whatsappService.sendInteractiveButtons(
+              to,
+              "¿Necesitas ayuda adicional?",
+              [
+                { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+                {
+                  type: "reply",
+                  reply: { id: "lineas", title: "Ver otra línea" },
+                },
+                {
+                  type: "reply",
+                  reply: { id: "menu", title: "Menú principal" },
+                },
+              ]
+            );
             break;
           case "3":
             await whatsappService.sendMessage(to, messages.ELECTRONICA_MESSAGE);
+            await whatsappService.sendInteractiveButtons(
+              to,
+              "¿Necesitas ayuda adicional?",
+              [
+                { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+                {
+                  type: "reply",
+                  reply: { id: "lineas", title: "Ver otra línea" },
+                },
+                {
+                  type: "reply",
+                  reply: { id: "menu", title: "Menú principal" },
+                },
+              ]
+            );
             break;
           case "4":
             await whatsappService.sendMessage(to, messages.TECNOLOGIAS_MESSAGE);
+            await whatsappService.sendInteractiveButtons(
+              to,
+              "¿Necesitas ayuda adicional?",
+              [
+                { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+                {
+                  type: "reply",
+                  reply: { id: "lineas", title: "Ver otra línea" },
+                },
+                {
+                  type: "reply",
+                  reply: { id: "menu", title: "Menú principal" },
+                },
+              ]
+            );
             break;
           default:
-            await whatsappService.sendMessage(to, messages.OPCION_INVALIDA_MESSAGE);
+            await whatsappService.sendMessage(
+              to,
+              messages.OPCION_INVALIDA_MESSAGE
+            );
         }
+        console.log("Eliminando estado del usuario");
         delete this.userState[user];
+        console.log("Estado del usuario después de eliminar:", this.userState);
         return;
       }
 
+      console.log("Verificando si es un saludo");
       if (this.isGreeting(incomingMessage)) {
         await this.sendWelcomeMessage(user, senderInfo);
         await this.sendMainMenu(user);
       } else {
+        console.log("Manejando opción del menú");
         await this.handleMenuOption(user, incomingMessage);
       }
       await whatsappService.markAsRead(message.id);
@@ -56,6 +127,8 @@ class MessageHandler {
       await this.handleButtonReply(user, buttonId);
       await whatsappService.markAsRead(message.id);
     }
+
+    console.log("Estado del usuario al final:", this.userState);
   }
 
   isGreeting(message) {
@@ -64,17 +137,20 @@ class MessageHandler {
   }
 
   getSenderName(senderInfo) {
+    console.log("senderInfo en getSenderName:", senderInfo);
     return senderInfo.profile?.name || senderInfo.wa_id;
   }
 
   async handleButtonReply(to, buttonId) {
+    console.log("Respuesta de botón:", buttonId);
     switch (buttonId) {
-      case "option_1": //Ubicación
+      case "option_1":
         const latitude = 7.123456;
         const longitude = -73.123456;
         const name = "Tecnoparque Nodo Bucaramanga";
-        const address = "📍 Cl. 48 #28-40, Sotomayor, Bucaramanga";
+        const address = " Cl. 48 #28-40, Sotomayor, Bucaramanga";
 
+        console.log("Enviando mensaje de ubicación");
         await whatsappService.sendLocationMessage(
           to,
           latitude,
@@ -82,69 +158,92 @@ class MessageHandler {
           name,
           address
         );
+        console.log("Mensaje de ubicación enviado");
 
+        console.log("Enviando mensaje de horarios");
         await whatsappService.sendMessage(to, messages.HORARIOS_MESSAGE);
-        return;
-
-      case "option_2": // Líneas Tecnológicas
-        await whatsappService.sendMessage(to, messages.LINEAS_TECNOLOGICAS_MESSAGE);
-        return;
-
-      case "option_3": // Accede a Tecnoparque
-        await whatsappService.sendMessage(
+        console.log("Mensaje de horarios enviado");
+        await whatsappService.sendInteractiveButtons(
           to,
-          "*Cómo acceder a Tecnoparque Nodo Bucaramanga* \n\n✅ *Requisitos para acceder:*\n\n1️⃣ *Tener una idea de proyecto de base tecnológica.*\n- Tecnoparque está dirigido a emprendedores, estudiantes, investigadores y empresas que desean desarrollar soluciones innovadoras en áreas como desarrollo de software, automatización, biotecnología, diseño industrial y más.\n- No es necesario que tengas conocimientos avanzados, pero sí una idea clara del problema que deseas resolver y la motivación para desarrollarla.\n\n2️⃣ *Registrarte en la plataforma oficial de Tecnoparque.*\n- Ingresa a https://redtecnoparque.com/ y crea una cuenta.\n- Completa tu perfil con información sobre tu proyecto y el área de interés.\n- Una vez registrado, selecciona el Nodo *Bucaramanga* y describe brevemente tu idea.\n\n3️⃣ *Asistir a una charla informativa y agendar una reunión con nuestros expertos.*\n- Luego de registrarte, recibirás una invitación para participar en una sesión informativa donde te explicaremos cómo funciona Tecnoparque y los beneficios que te ofrecemos.\n- Posteriormente, podrás agendar una reunión personalizada con un experto en tu área de interés, quien te orientará en el desarrollo de tu proyecto.\n\n"
+          "¿Necesitas ayuda adicional?",
+          [
+            { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+            { type: "reply",reply: { id: "menu", title: "Menú principal" },},
+          ]
         );
         return;
 
-      case "option_4": // Registrar un Proyecto
+      case "option_2":
+        console.log("Enviando mensaje de lineas tecnologicas");
         await whatsappService.sendMessage(
           to,
-          "Para registrar un nuevo proyecto en Tecnoparque Nodo Bucaramanga, sigue estos pasos:\n\n1️⃣ Regístrate en la plataforma de Tecnoparque: (https://redtecnoparque.com/).\n2️⃣ Inicia sesión y crea una nueva idea de proyecto.\n3️⃣ Elige el nodo 'Bucaramanga' y describe tu idea.\n\n Tutorial: https://www.youtube.com/watch?v=jY7SiSPnlKc."
+          messages.LINEAS_TECNOLOGICAS_MESSAGE
+        );
+        console.log("Mensaje de lineas tecnologicas enviado");
+        this.userState[to] = { action: "lineas_tecnologicas" };
+        console.log("Estado del usuario actualizado:", this.userState);
+        return;
+
+      case "option_3":
+        await whatsappService.sendMessage(to, messages.REQUISITOS_MESSAGE);
+        await whatsappService.sendInteractiveButtons(
+          to,
+          "¿Necesitas ayuda adicional?",
+          [
+            { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+            { type: "reply", reply: { id: "eventos", title: "Eventos" } },
+            { type: "reply", reply: { id: "menu", title: "Menú principal" } },
+          ]
         );
         return;
 
-      case "option_5": //Consultar estado de un proyecto
+      case "option_4":
         await whatsappService.sendMessage(
           to,
-          "Para consultar el estado de tu proyecto en Tecnoparque Nodo Bucaramanga:\n\n🔍 Ingresa a la plataforma de Tecnoparque: [redtecnoparque.com](https://redtecnoparque.com/).\n🔑 Inicia sesión con tu usuario registrado.\n📋 Dirígete a la sección 'Mis Proyectos' para ver el estado actual.\n\n📌 Si tienes dudas, comunícate con el equipo de Tecnoparque Bucaramanga."
+          messages.REGISTRAR_PROYECTO_MESSAGE
         );
         return;
 
-      case "option_6":
+      case "option_5":
         await whatsappService.sendMessage(
           to,
-          "🔗 Puedes registrarte en los eventos y convocatorias a través de nuestro formulario oficial: https://redtecnoparque.com/eventos"
+          messages.CONSULTAR_PROYECTO_MESSAGE
         );
         return;
 
-      case "option_7":
-        await whatsappService.sendMessage(
-          to,
-          "📅 Para agendar una reunión con un asesor de Tecnoparque, accede a: https://redtecnoparque.com/citas"
-        );
+      case "menu":
+        await this.sendMainMenu(to); // Volver al menú principal
         return;
 
-      case "option_8":
+      case "terminar":
         await whatsappService.sendMessage(
           to,
-          "❓ *Preguntas Frecuentes sobre Eventos y Convocatorias en Tecnoparque*\n\n1️⃣ *¿Quiénes pueden participar en los eventos?*\n   - Cualquier persona interesada en la tecnología y la innovación.\n\n2️⃣ *¿Los eventos tienen costo?*\n   - No, todos los eventos son gratuitos.\n\n3️⃣ *¿Cómo me inscribo en un evento?*\n   - Puedes registrarte en: https://redtecnoparque.com/eventos"
+          `✨ ¡Entendido! 😊 Si en algún momento necesitas ayuda, solo escribe "Hola" y estaré aquí para asistirte. ¡Que tengas un gran día! 🚀`
         );
         return;
+      
+        case "eventos":
+          console.log("Usuario seleccionó 'Eventos'");
+          await this.handleMenuOption(to, "4");
+          return;
 
-      // ... (Agrega más casos para otros botones)
+      case "lineas":
+        await whatsappService.sendMessage(
+          to,
+          messages.LINEAS_TECNOLOGICAS_MESSAGE
+        ); 
+        this.userState[to] = { action: "lineas_tecnologicas" };
+        return;
 
       default:
-        await whatsappService.sendMessage(
-          to,
-          "Lo siento, no entendí tu selección. Por favor, elige una opción válida."
-        );
+        await whatsappService.sendMessage(to, messages.OPCION_INVALIDA_MESSAGE);
     }
   }
 
-  async handleMenuOption(to, option) { //Manejo de Opciones menú principal
+  async handleMenuOption(to, option) {
+    console.log("Opción de menú:", option);
     switch (option) {
-      case "1": //Información sobre Tecnoparque
+      case "1":
         await whatsappService.sendInteractiveButtons(
           to,
           "Selecciona la información que necesitas:",
@@ -162,7 +261,7 @@ class MessageHandler {
         );
         return;
 
-      case "2": // Registro y Seguimeinto de Proyectos
+      case "2":
         await whatsappService.sendInteractiveButtons(
           to,
           "Selecciona la información que necesitas:",
@@ -179,14 +278,11 @@ class MessageHandler {
         );
         return;
 
-      case "4": // Eventos y convocatorias
-        await whatsappService.sendMessage(
-          to,
-          " *Eventos y Convocatorias en Tecnoparque Bucaramanga*\n\nMantente informado sobre los próximos eventos, talleres y convocatorias disponibles en Tecnoparque Nodo Bucaramanga.\n\n *Eventos disponibles:*\n- *Bootcamp de Innovación Tecnológica* - Fecha:  [Fecha del evento]\n- *Workshop de Inteligencia Artificial* - Fecha:  [Fecha del evento]\n\n *Convocatorias abiertas:*\n- *Convocatoria de Emprendimientos Tecnológicos* - Cierre:  [Fecha de cierre]\n- *Acceso a laboratorios y prototipado* - Cierre:  [Fecha de cierre]\n\n Más información y registro aquí: [Página oficial de eventos](https://redtecnoparque.com/eventos)"
-        );
+      case "4":
+        await whatsappService.sendMessage(to, messages.EVENTOS_MESSAGE);
         return;
 
-        case "6": //Contacta a un Asesor
+      case "6":
         const mentorContact = {
           name: {
             formatted_name: "Ing. Tecnoparque",
@@ -200,12 +296,25 @@ class MessageHandler {
             },
           ],
         };
+        await whatsappService.sendMessage(
+          to,
+          "Aquí tienes la información de contacto del Ing. Rafael Ramírez, nuestro mentor en Tecnoparque:"
+        );
+
         await whatsappService.sendContactMessage(to, mentorContact);
+        await whatsappService.sendInteractiveButtons(
+          to,
+          "¿Necesitas ayuda adicional?",
+          [
+            { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+            { type: "reply", reply: { id: "eventos", title: "Eventos" } },
+            { type: "reply", reply: { id: "menu", title: "Menú principal" } },
+          ]
+        );
         return;
-      // ... (Agrega más casos para otros números del menú principal)
 
       default:
-        await whatsappService.sendMessage(to.OPCION_INVALIDA_MESSAGE);
+        await whatsappService.sendMessage(to, messages.OPCION_INVALIDA_MESSAGE);
     }
   }
 }
