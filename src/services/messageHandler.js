@@ -240,6 +240,56 @@ class MessageHandler {
     }
   }
 
+  // async sendContact(to) {
+  //   const contact = {
+  //     addresses: [
+  //       {
+  //         street: "Cl. 48 #28-40",
+  //         city: "Bucaramanga",
+  //         state: "Santander",
+  //         zip: "",
+  //         country: "Colombia",
+  //         country_code: "",
+  //         type: "WORK"
+  //       }
+  //     ],
+  //     emails: [
+  //       {
+  //         email: "brayan.aparicio.duran@gmail.com",
+  //         type: "WORK"
+  //       }
+  //     ],
+  //     name: {
+  //       formatted_name: "Tecnoparque Contacto",
+  //       first_name: "Tecnoparque",
+  //       last_name: "Contacto",
+  //       middle_name: "",
+  //       suffix: "",
+  //       prefix: ""
+  //     },
+  //     org: {
+  //       company: "Tecnoparque",
+  //       department: "Atención al Cliente",
+  //       title: "Representante"
+  //     },
+  //     phones: [
+  //       {
+  //         phone: "+573153737651",
+  //         wa_id: "3153737651",
+  //         type: "WORK"
+  //       }
+  //     ],
+  //     urls: [
+  //       {
+  //         url: "https://redtecnoparque.com",
+  //         type: "WORK"
+  //       }
+  //     ]
+  //   };
+
+  //   await whatsappService.sendContactMessage(to, contact);
+  // }
+
   async handleMenuOption(to, option) {
     console.log("Opción de menú:", option);
     switch (option) {
@@ -278,30 +328,58 @@ class MessageHandler {
         );
         return;
 
-      case "4":
+      case "3":
         await whatsappService.sendMessage(to, messages.EVENTOS_MESSAGE);
         return;
 
-      case "6":
-        const mentorContact = {
+      case "4":
+        const contact = {
+          addresses: [
+            {
+              street: "Cl. 48 #28-40",
+              city: "Bucaramanga",
+              state: "Santander",
+              zip: "",
+              country: "Colombia",
+              country_code: "",
+              type: "WORK"
+            }
+          ],
+          emails: [
+            {
+              email: "brayan.aparicio.duran@gmail.com",
+              type: "WORK"
+            }
+          ],
           name: {
-            formatted_name: "Ing. Tecnoparque",
-            first_name: "Rafael",
-            last_name: "Ramírez",
+            formatted_name: "Tecnoparque Contacto",
+            first_name: "Tecnoparque",
+            last_name: "Contacto",
+            middle_name: "",
+            suffix: "",
+            prefix: ""
+          },
+          org: {
+            company: "Tecnoparque",
+            department: "Atención al Cliente",
+            title: "Representante"
           },
           phones: [
             {
-              phone: "+573175491833",
-              type: "WORK",
-            },
+              phone: "+573153737651",
+              wa_id: "3153737651",
+              type: "WORK"
+            }
           ],
+          urls: [
+            {
+              url: "https://redtecnoparque.com",
+              type: "WORK"
+            }
+          ]
         };
-        await whatsappService.sendMessage(
-          to,
-          "Aquí tienes la información de contacto del Ing. Rafael Ramírez, nuestro mentor en Tecnoparque:"
-        );
-
-        await whatsappService.sendContactMessage(to, mentorContact);
+        
+        await whatsappService.sendContactMessage(to, contact);
         await whatsappService.sendInteractiveButtons(
           to,
           "¿Necesitas ayuda adicional?",
