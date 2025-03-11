@@ -121,6 +121,26 @@ class WhatsAppService {
     await sendToWhatsApp(data);
   }
 
+  async sendListMessage(to, headerText, bodyText, buttonText, sections) {
+    const data = {
+        messaging_product: 'whatsapp',
+        to,
+        type: 'interactive',
+        interactive: {
+            type: 'list',
+            header: {
+                type: 'text',
+                text: headerText,
+            },
+            body: { text: bodyText },
+            action: {
+                button: buttonText,
+                sections: sections,
+            },
+        },
+    };
+    await sendToWhatsApp(data);
+}
 
 }
 
