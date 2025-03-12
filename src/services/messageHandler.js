@@ -34,7 +34,10 @@ class MessageHandler {
               to,
               "¿Necesitas ayuda adicional?",
               [
-                { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+                {
+                  type: "reply",
+                  reply: { id: "terminar", title: "No, gracias" },
+                },
                 {
                   type: "reply",
                   reply: { id: "lineas", title: "Ver otra línea" },
@@ -47,12 +50,18 @@ class MessageHandler {
             );
             break;
           case "2":
-            await whatsappService.sendMessage(to,messages.BIOTECNOLOGIA_MESSAGE);
+            await whatsappService.sendMessage(
+              to,
+              messages.BIOTECNOLOGIA_MESSAGE
+            );
             await whatsappService.sendInteractiveButtons(
               to,
               "¿Necesitas ayuda adicional?",
               [
-                { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+                {
+                  type: "reply",
+                  reply: { id: "terminar", title: "No, gracias" },
+                },
                 {
                   type: "reply",
                   reply: { id: "lineas", title: "Ver otra línea" },
@@ -70,7 +79,10 @@ class MessageHandler {
               to,
               "¿Necesitas ayuda adicional?",
               [
-                { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+                {
+                  type: "reply",
+                  reply: { id: "terminar", title: "No, gracias" },
+                },
                 {
                   type: "reply",
                   reply: { id: "lineas", title: "Ver otra línea" },
@@ -88,7 +100,10 @@ class MessageHandler {
               to,
               "¿Necesitas ayuda adicional?",
               [
-                { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+                {
+                  type: "reply",
+                  reply: { id: "terminar", title: "No, gracias" },
+                },
                 {
                   type: "reply",
                   reply: { id: "lineas", title: "Ver otra línea" },
@@ -144,7 +159,7 @@ class MessageHandler {
   async handleButtonReply(to, buttonId) {
     console.log("Respuesta de botón:", buttonId);
     switch (buttonId) {
-      case "option_1":
+      case "option_1": // btn_Ubicación
         const latitude = 7.123456;
         const longitude = -73.123456;
         const name = "Tecnoparque Nodo Bucaramanga";
@@ -168,12 +183,12 @@ class MessageHandler {
           "¿Necesitas ayuda adicional?",
           [
             { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
-            { type: "reply",reply: { id: "menu", title: "Menú principal" },},
+            { type: "reply", reply: { id: "menu", title: "Menú principal" } },
           ]
         );
         return;
 
-      case "option_2":
+      case "option_2": //btn_Líneas_Tecnológicas
         console.log("Enviando mensaje de lineas tecnologicas");
         await whatsappService.sendMessage(
           to,
@@ -184,7 +199,7 @@ class MessageHandler {
         console.log("Estado del usuario actualizado:", this.userState);
         return;
 
-      case "option_3":
+      case "option_3": // btn_Ingresar_Tecnoparque
         await whatsappService.sendMessage(to, messages.REQUISITOS_MESSAGE);
         await whatsappService.sendInteractiveButtons(
           to,
@@ -197,17 +212,33 @@ class MessageHandler {
         );
         return;
 
-      case "option_4":
+      case "option_4": //btn_Registrar_Proyecto
         await whatsappService.sendMessage(
           to,
           messages.REGISTRAR_PROYECTO_MESSAGE
         );
+        await whatsappService.sendInteractiveButtons(
+          to,
+          "¿Necesitas ayuda adicional?",
+          [
+            { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+            { type: "reply", reply: { id: "menu", title: "Menú principal" } },
+          ]
+        );
         return;
 
-      case "option_5":
+      case "option_5": //btn_Consultar_Estado
         await whatsappService.sendMessage(
           to,
           messages.CONSULTAR_PROYECTO_MESSAGE
+        );
+        await whatsappService.sendInteractiveButtons(
+          to,
+          "¿Necesitas ayuda adicional?",
+          [
+            { type: "reply", reply: { id: "terminar", title: "No, gracias" } },
+            { type: "reply", reply: { id: "menu", title: "Menú principal" } },
+          ]
         );
         return;
 
@@ -221,17 +252,17 @@ class MessageHandler {
           `✨ ¡Entendido! 😊 Si en algún momento necesitas ayuda, solo escribe "Hola" y estaré aquí para asistirte. ¡Que tengas un gran día! 🚀`
         );
         return;
-      
-        case "eventos":
-          console.log("Usuario seleccionó 'Eventos'");
-          await this.handleMenuOption(to, "4");
-          return;
+
+      case "eventos":
+        console.log("Usuario seleccionó 'Eventos'");
+        await this.handleMenuOption(to, "4");
+        return;
 
       case "lineas":
         await whatsappService.sendMessage(
           to,
           messages.LINEAS_TECNOLOGICAS_MESSAGE
-        ); 
+        );
         this.userState[to] = { action: "lineas_tecnologicas" };
         return;
 
@@ -342,14 +373,14 @@ class MessageHandler {
               zip: "",
               country: "Colombia",
               country_code: "",
-              type: "WORK"
-            }
+              type: "WORK",
+            },
           ],
           emails: [
             {
               email: "brayan.aparicio.duran@gmail.com",
-              type: "WORK"
-            }
+              type: "WORK",
+            },
           ],
           name: {
             formatted_name: "Tecnoparque Contacto",
@@ -357,28 +388,28 @@ class MessageHandler {
             last_name: "Contacto",
             middle_name: "",
             suffix: "",
-            prefix: ""
+            prefix: "",
           },
           org: {
             company: "Tecnoparque",
             department: "Atención al Cliente",
-            title: "Representante"
+            title: "Representante",
           },
           phones: [
             {
               phone: "+573153737651",
               wa_id: "573153737651",
-              type: "WORK"
-            }
+              type: "WORK",
+            },
           ],
           urls: [
             {
               url: "https://redtecnoparque.com",
-              type: "WORK"
-            }
-          ]
+              type: "WORK",
+            },
+          ],
         };
-        
+
         await whatsappService.sendMessage(to, messages.CONTAC_MENSSAGE);
         await whatsappService.sendContactMessage(to, contact);
         await whatsappService.sendInteractiveButtons(
