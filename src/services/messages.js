@@ -9,35 +9,35 @@ export const LINEAS_TECNOLOGICAS_MESSAGE = ` *Líneas Tecnológicas en Tecnoparq
 
 export const REQUISITOS_MESSAGE = `*Cómo acceder a Tecnoparque Nodo Bucaramanga* \n\n✅ *Requisitos para acceder:*\n\n1️⃣ *Tener una idea de proyecto de base tecnológica.*\n- Tecnoparque está dirigido a emprendedores, estudiantes, investigadores y empresas que desean desarrollar soluciones innovadoras en áreas como desarrollo de software, automatización, biotecnología, diseño industrial y más.\n- No es necesario que tengas conocimientos avanzados, pero sí una idea clara del problema que deseas resolver y la motivación para desarrollarla.\n\n2️⃣ *Registrarte en la plataforma oficial de Tecnoparque.*\n- Ingresa a https://redtecnoparque.com/ y crea una cuenta.\n- Completa tu perfil con información sobre tu proyecto y el área de interés.\n- Una vez registrado, selecciona el Nodo *Bucaramanga* y describe brevemente tu idea.\n\n3️⃣ *Asistir a una charla informativa y agendar una reunión con nuestros expertos.*\n- Luego de registrarte, recibirás una invitación para participar en una sesión informativa donde te explicaremos cómo funciona Tecnoparque y los beneficios que te ofrecemos.\n- Posteriormente, podrás agendar una reunión personalizada con un experto en tu área de interés, quien te orientará en el desarrollo de tu proyecto.\n\n`;
 
-export const REGISTRAR_PROYECTO_MESSAGE = `📝 *Registrar Proyecto*\n
-¿Tienes una idea innovadora? 🚀 Sigue estos pasos para registrar tu proyecto en *Tecnoparque* y acceder a asesoría, recursos y apoyo tecnológico: \n 
+export const REGISTRAR_PROYECTO_MESSAGE = "📝 *Registrar Proyecto*\n"+
+"¿Tienes una idea innovadora? 🚀 Sigue estos pasos para registrar tu proyecto en *Tecnoparque* y acceder a asesoría, recursos y apoyo tecnológico: \n"+
 
-    1️⃣ *Completa el formulario de inscripción* \n 
-    👉 https://tecnoparque.com.co/registro\n\n  
+    "1️⃣ *Completa el formulario de inscripción* \n"+ 
+    "👉 https://tecnoparque.com.co/registro\n\n"+  
 
-    2️⃣ *Describe tu proyecto* 🛠️\n  
-    Explica la idea, objetivos y tecnologías que planeas usar.\n\n 
+    "2️⃣ *Describe tu proyecto* 🛠️\n"+  
+    "Explica la idea, objetivos y tecnologías que planeas usar.\n\n"+ 
 
-    3️⃣ *Agenda una reunión con un mentor* 📅\n  
-    Recibirás orientación para estructurar tu proyecto. \n\n 
+    "3️⃣ *Agenda una reunión con un mentor* 📅\n"+  
+    "Recibirás orientación para estructurar tu proyecto. \n\n"+ 
 
-    🎥 *Video tutorial sobre el registro de idea:*\n
-    📺  https://www.youtube.com/watch?v=KdfeYFSCxu4`;
+    "🎥 *Video tutorial sobre el registro de idea:*\n"+
+    "📺  https://www.youtube.com/watch?v=KdfeYFSCxu4 ";
 
-export const CONSULTAR_PROYECTO_MESSAGE = `🔍 *Consultar Proyecto*\n 
-¿Quieres conocer el estado de tu proyecto en *Tecnoparque*? Sigue estos pasos para hacer una consulta: \n\n 
+export const CONSULTAR_PROYECTO_MESSAGE = "🔍 *Consultar Proyecto*\n"+ 
+"¿Quieres conocer el estado de tu proyecto en *Tecnoparque*? Sigue estos pasos para hacer una consulta: \n\n"+ 
 
-    1️⃣ *Ingresa al portal de consulta* 🌐\n  
-    👉 https://tecnoparque.com.co/login\n\n 
+    "1️⃣ *Ingresa al portal de consulta* 🌐\n"+  
+    "👉 https://tecnoparque.com.co/login\n\n"+ 
 
-    2️⃣ *Inicia sesión con tu cuenta* 🔑\n 
-    Usa el correo y contraseña registrados.\n\n  
+    "2️⃣ *Inicia sesión con tu cuenta* 🔑\n"+ 
+    "Usa el correo y contraseña registrados.\n\n"+  
 
-    3️⃣ *Busca tu proyecto* 🔍\n  
-    Introduce el ID del proyecto o tu nombre para ver detalles.\n\n  
+    "3️⃣ *Busca tu proyecto* 🔍\n"+  
+    "Introduce el ID del proyecto o tu nombre para ver detalles.\n\n"+  
 
-    4️⃣ *Revisa el estado y comentarios* 📄\n  
-    Verifica el progreso, recomendaciones y próximos pasos.`;  
+    "4️⃣ *Revisa el estado y comentarios* 📄\n"+  
+    "Verifica el progreso, recomendaciones y próximos pasos.";  
   
 
 export const EVENTOS_MESSAGE =
