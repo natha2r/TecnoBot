@@ -76,6 +76,9 @@ export const TECNOLOGIAS_MESSAGE = "*TECNOLOGÍAS VIRTUALES*\n\n" +
     " - Animación Digital y Realidad Virtual \n" +
     " - Inteligencia Artificial y computación avanzada 🤖";
 
+export const CONTAC_MENSSAGE = "📌 *Contacto Tecnoparque*\n\n"+
+    "Te comparto el contacto del representante de *Tecnoparque*, quien podrá brindarte más información y apoyo en tus proyectos tecnológicos. 🚀"+
+    "No dudes en escribirle para resolver cualquier duda o coordinar una reunión. ¡Éxitos! 💡"
 
 // Mensajes de Error
 export const OPCION_INVALIDA_MESSAGE = "Lo siento, no entendí tu selección. Por favor, elige una opción válida.";
