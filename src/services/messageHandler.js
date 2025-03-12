@@ -367,7 +367,7 @@ class MessageHandler {
           phones: [
             {
               phone: "+573153737651",
-              wa_id: "3153737651",
+              wa_id: "573153737651",
               type: "WORK"
             }
           ],
