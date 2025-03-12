@@ -379,6 +379,7 @@ class MessageHandler {
           ]
         };
         
+        await whatsappService.sendMessage(to, messages.CONTAC_MENSSAGE);
         await whatsappService.sendContactMessage(to, contact);
         await whatsappService.sendInteractiveButtons(
           to,
