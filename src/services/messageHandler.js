@@ -255,7 +255,7 @@ class MessageHandler {
 
       case "eventos":
         console.log("Usuario seleccionó 'Eventos'");
-        await this.handleMenuOption(to, "4");
+        await this.handleMenuOption(to, "3");
         return;
 
       case "lineas":
